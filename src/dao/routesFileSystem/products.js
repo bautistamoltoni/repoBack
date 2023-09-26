@@ -3,11 +3,16 @@ const express = require('express');
 const fsPromises = require('fs/promises');
 const path = require('path');
 
+
+
+
 const productsRouter = express.Router();
 const productsFilePath = path.join(__dirname, '../products.json');
 
 module.exports = (io) => {
     productsRouter.get('/', async (req, res) => {
+
+
         try {
             const limit = req.query.limit;
             const data = await fsPromises.readFile(productsFilePath, 'utf8');
@@ -24,6 +29,9 @@ module.exports = (io) => {
     });
 
     productsRouter.get('/:pid', async (req, res) => {
+
+
+
         try {
             const productId = req.params.pid;
             const data = await fsPromises.readFile(productsFilePath, 'utf8');
@@ -39,9 +47,11 @@ module.exports = (io) => {
         } catch (error) {
             res.status(500).json({ error: 'Error al obtener el producto' });
         }
-    });
+     });
 
     productsRouter.put('/:pid', async (req, res) => {
+ 
+    
         try {
             const productId = parseInt(req.params.pid);
             const updatedData = req.body;
@@ -59,10 +69,12 @@ module.exports = (io) => {
             }
         } catch (error) {
             res.status(500).json({ error: 'Error al actualizar el producto' });
-        }
-    });
+    }})
+     
 
     productsRouter.post('/', async (req, res) => {
+
+
         try {
             const productData = req.body;
             const data = await fsPromises.readFile(productsFilePath, 'utf8');
@@ -84,7 +96,8 @@ module.exports = (io) => {
         }
     });
 
-    productsRouter.delete('/:pid', async (req, res) => {
+    productsRouter.delete('/:id', async (req, res) => {
+
         try {
             const productId = parseInt(req.params.pid);
             const data = await fsPromises.readFile(productsFilePath, 'utf8');
@@ -99,7 +112,7 @@ module.exports = (io) => {
         } catch (error) {
             res.status(500).json({ error: 'Error al eliminar el producto' });
         }
-    });
+     });
 
     return productsRouter;
 };

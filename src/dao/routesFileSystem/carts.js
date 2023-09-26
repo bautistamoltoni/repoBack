@@ -18,7 +18,6 @@ const productsFilePath = path.join(__dirname,'../products.json');
 
 
 cartsRouter.post('/', async (req, res) => {
-
     try {
         const newCart = {
             id: generateUniqueId(), 
@@ -35,11 +34,16 @@ cartsRouter.post('/', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Error al crear el carrito' });
     }
-});
+  });
 
-cartsRouter.get('/:cid', async (req, res) => {
+ 
+
+
+
+cartsRouter.get('/:id', async (req, res) => {
+
     try {
-        const cartId = req.params.cid;
+        const cartId = req.params.id;
         const cartData = await fsPromises.readFile(cartsFilePath, 'utf8');
         const carts = JSON.parse(cartData);
 
@@ -63,6 +67,8 @@ cartsRouter.get('/:cid', async (req, res) => {
     }
 });
 
+
+// Ruta para agregar un producto a un carrito
 cartsRouter.post('/:cid/product/:pid', async (req, res) => {
     try {
         const cartId = req.params.cid;
@@ -105,5 +111,11 @@ cartsRouter.post('/:cid/product/:pid', async (req, res) => {
         res.status(500).json({ error: 'Error al agregar el producto al carrito' });
     }
 });
+
+
+
+
+
+
 
 module.exports = cartsRouter
